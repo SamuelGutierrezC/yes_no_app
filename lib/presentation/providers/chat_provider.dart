@@ -21,6 +21,11 @@ class ChatProvider extends ChangeNotifier{
     //Mueve el Scroll
     moveScrollToBottom();
   }
+//Future es una promesa
+//get es para que el servidor me diga/obtenga algo
+//dio es un paquete de flutter para manejar peticiones http
+
+
 
     //Mover el scroll al ultimo mensaje
     Future<void> moveScrollToBottom() async{
