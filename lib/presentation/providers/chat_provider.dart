@@ -4,18 +4,19 @@ import 'package:yes_no_app/domain/entities/message.dart';
 class ChatProvider extends ChangeNotifier{
   
   List<Message> messageList = [
-    Message(text: 'Hola tilin', fromWho: FromWho.me),
-    Message(text: 'lloras porque reprobaste TAP?', fromWho: FromWho.me)
-  ];
+ ];
   //Controlador para manerar la posición del scroll
   final ScrollController chatScrollController = ScrollController();
 
   //Enviar un mensaje
   Future<void> sendMessage(String text) async {
+    //Evita que se mande mensaje vacio
+      if ( text.isEmpty) return;
     //El mensaje siempre va a ser 'me' porque yo lo envío
     final newMessage = Message(text: text, fromWho: FromWho.me);
     //Agrega un elemento a la lista "messageList"
     messageList.add(newMessage);
+    print('Cantidad de mensajes: ${messageList.length}');
     //Notifica si algo de provider cambió para que se guarde en el
     notifyListeners();
     //Mueve el Scroll
