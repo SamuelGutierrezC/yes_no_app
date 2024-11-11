@@ -20,7 +20,7 @@ class ChatScreen extends StatelessWidget {
             backgroundImage: NetworkImage('https://images.tagesschau.de/image/d0295fb9-e9c8-4aaf-a603-16b0b9c180e8/AAABkkX3FSs/AAABkZLngyM/1x1-256/sheinbaum-122.jpg'),
           ),
         ),
-        title: const Text('Mi pinshesha🥰'),
+        title: const Text('Claudia Sheinbaum🥰'),
         centerTitle: true,
       ),
       body: _ChatView(),

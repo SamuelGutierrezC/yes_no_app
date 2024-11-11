@@ -3,15 +3,13 @@ import 'package:yes_no_app/config/helpers/get_yes_no_answer.dart';
 import 'package:yes_no_app/domain/entities/message.dart';
 
 class ChatProvider extends ChangeNotifier{
-  
-  List<Message> messageList = [
-    Message(text: 'Hola tilin', fromWho: FromWho.me),
-    Message(text: 'lloras porque reprobaste TAP?', fromWho: FromWho.me)
- ];
   //Controlador para manerar la posición del scroll
   final ScrollController chatScrollController = ScrollController();
   //Instancia de la clase GetYesNoAnswer
   final getYesNoAnswer = GetYesNoAnswer();
+
+  List<Message> messageList = [
+ ];
 
   //Enviar un mensaje
   Future<void> sendMessage(String text) async {
@@ -23,7 +21,7 @@ class ChatProvider extends ChangeNotifier{
     messageList.add(newMessage);
     //Notifica si algo de provider cambió para que se guarde en el
 
-    if (text.endsWith('?')){
+    if ( text.endsWith('?')){
       herReply();
     }
     notifyListeners();
@@ -50,14 +48,15 @@ class ChatProvider extends ChangeNotifier{
 Future<void> moveScrollToBottom() async {
   // Verificar si el ScrollController tiene clientes antes de hacer scroll
   if (chatScrollController.hasClients) {
-    //Un pequeño atraso en la animación para garantizar que siempre se verá aun cuando se envien
-    //mensajes cortos y rápidps
+    await Future.delayed(const Duration(milliseconds: 100));
+
+    // Un pequeño atraso en la animación para garantizar que siempre se verá aun cuando se envien
+    // mensajes cortos y rápidos
     await chatScrollController.animateTo(
-      //maxScrollExtent: determina a lo máximo que el scroll puede dar
       chatScrollController.position.maxScrollExtent, 
       duration: const Duration(milliseconds: 300), 
       curve: Curves.easeOut,
-      );
-    }  
+    );
   }
+}
 }
