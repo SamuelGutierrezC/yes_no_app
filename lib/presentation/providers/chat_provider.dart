@@ -6,15 +6,22 @@ class ChatProvider extends ChangeNotifier{
   //Controlador para manerar la posición del scroll
   final ScrollController chatScrollController = ScrollController();
   //Instancia de la clase GetYesNoAnswer
-  final getYesNoAnswer = GetYesNoAnswer();
+  final GetYesNoAnswer getYesNoAnswer = GetYesNoAnswer();
 
   List<Message> messageList = [
  ];
+
+  //Variable para la hora de envío del mensaje
+  DateTime lastMessageTime = DateTime.now();
 
   //Enviar un mensaje
   Future<void> sendMessage(String text) async {
     //Evita que se mande mensaje vacio
       if ( text.isEmpty) return;
+
+    //Avanza unos mimutos en la ultima hora del mensaje
+      lastMessageTime = lastMessageTime.add(const Duration(minutes:1));
+  
     //El mensaje siempre va a ser 'me' porque yo lo envío
     final newMessage = Message(text: text, fromWho: FromWho.me);
     //Agrega un elemento a la lista "messageList"
@@ -45,18 +52,16 @@ class ChatProvider extends ChangeNotifier{
 
 
 //Mover el scroll al ultimo mensaje
-Future<void> moveScrollToBottom() async {
-  // Verificar si el ScrollController tiene clientes antes de hacer scroll
-  if (chatScrollController.hasClients) {
+  Future<void> moveScrollToBottom() async {
     await Future.delayed(const Duration(milliseconds: 100));
 
     // Un pequeño atraso en la animación para garantizar que siempre se verá aun cuando se envien
     // mensajes cortos y rápidos
-    await chatScrollController.animateTo(
+    chatScrollController.animateTo(
       chatScrollController.position.maxScrollExtent, 
       duration: const Duration(milliseconds: 300), 
       curve: Curves.easeOut,
     );
   }
 }
-}
+
